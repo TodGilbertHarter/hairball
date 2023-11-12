@@ -1,0 +1,12 @@
+/CHAPTER" Hairball Builtins"/
+Built ins are Hairball words which exist in a special vocabulary named "HAIRBALL".
+These words are always present, although you could remove the built in vocabulary
+from the dictionary search list if desired. The purpose of the built ins is to 
+provide a minimal language which gives access to Hairball runtime features and
+the Hairball compiler and interpreter. This allows extensions to the Hairball
+language to be written entirely in Hairball itself.
+
+/SECTION" Defining Words"/
+Defining words are 
+SECTION/
+CHAPTER/

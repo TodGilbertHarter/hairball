@@ -1,0 +1,8 @@
+/.gradle/
+/orientdb/
+/webroot/
+/bin/
+/.vertx/
+/build/
+/.cache-main/
+/.cache-tests/

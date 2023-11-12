@@ -1,0 +1,52 @@
+/* Hairball documentation introduction */
+/CHAPTER" What is Hairball?"/
+Hairball is a special purpose language who's function is to build markup language syntax.
+It consists of words, tokens delimited by whitespace which have defined meanings to
+the Hairball interpreter, and text, which is everything else. Some Hairball words
+generate output, others are 'defining words' or 'utility words' which allow you to
+create additional words, or perform programming language type functions, such as
+conditionals. 
+
+Some Hairball words access the interpreter's input in order to introduce new syntax
+such as parsing text out of the input and reformatting it or other similar tasks. It
+is also possible to include a file, generate output streams to different files, and
+other similar tasks.
+
+For example: 
+
+/EXAMPLE" /: /MYSPECIALHEADERS" &lt;h1 class="specialheader"&gt; /" /. &lt/h1&gt; :/ "/ 
+
+is a Hairball definition. It could be placed anywhere in a source file, and from that
+point forward the markup:
+
+/EXAMPLE" /MYSPECIALHEADERS" Sample Header Text &quot;/ "/
+
+will now produce the HTML /CODE &lt;h1 class="specialheader"&gt;Sample Header Text&lt;/h1&gt; CODE/
+
+There is really no limit to the complexity of these definitions, and they can call
+each other, because a new definition is just another hairball word, on an equal 
+footing with all existing words.
+
+Note that I am using a convention of starting and ending my Hairball words with the '/'
+character. Built in Hairball words do this, and it is reasonable convention to follow
+when generating text, but it isn't a rule! Thus I can build markup which has a very
+flexible syntax and specialized purposes.
+
+For example:
+
+/EXAMPLE" /: homepage &lt;a href="myhomepage.html"&gt;homepage&lt;/a&gt; "/
+
+would create a word which replaces every following instance of 'homepage' with
+a link! Kinda handy, eh? You can start to see the possibilities here. Markup languages
+like Markdown are nice, but all it does is annotate your text. If you want to do
+something more complex, either you have to write plugins for some specific Markdown
+parser, which is ugly and complex, or construct some much more complicated 
+processing chain using another more general tool to generate your Markdown. At
+that point you have lost the advantage of simplicity.
+
+With Hairball you can do simple stuff easily enough, Hairball comes with a set of
+HTML generating definitions which can accomplish pretty much the same thing as Markdown,
+except you have the source for them, in Hairball, and you can tweak them, or override
+them with new definitions easily. Think of it as having all the capabilities of 
+other markup languages, and more.
+CHAPTER/

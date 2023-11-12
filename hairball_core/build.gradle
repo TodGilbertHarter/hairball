@@ -1,0 +1,127 @@
+/**
+ * This software is Copyright (C) 2017 Tod G. Harter. All rights reserved.
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/**
+ * Hairball language implementation. This is both usable as a standalone application and as a library.
+ */
+
+buildscript {
+	repositories {
+	    maven {
+	      url "https://plugins.gradle.org/m2/"
+	    }
+    	jcenter()
+        mavenCentral()
+	}
+	dependencies {
+		classpath "gradle.plugin.io.vertx:vertx-gradle-plugin:1.1.1"
+		classpath 'org.projectlombok:lombok:1.18.20'
+	}
+}
+
+plugins {
+	id "fr.brouillard.oss.gradle.jgitver" //version "0.10.0-rc03"
+//	id "com.github.johnrengelman.shadow" version "7.0.0"
+	id 'maven-publish'
+}
+
+apply plugin: 'eclipse'
+//apply plugin: 'java'
+apply plugin: 'java-library'
+//apply plugin: 'application'
+
+group = 'com.giantelectronicbrain'
+//def implVersion = version.toString().substring(0,version.toString().indexOf('-'));
+
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+String vertxUIVersion = project.hasProperty('vertxUIVersion') ? project.property('vertxUIVersion') : '1.04-tgh'
+
+//mainClassName = 'com.giantelectronicbrain.catfood.hairball.Hairball'
+
+//application {
+//    mainClass = 'com.giantelectronicbrain.catfood.hairball.Hairball'
+//}
+
+jar {
+	manifest {
+		attributes 'Implementation-Version': project.ext.base_tag
+		}
+	}
+	
+test {
+	testLogging {
+		showStandardStreams = true
+		exceptionFormat = 'full'
+	}
+	systemProperty 'gwt.args', "-logdir build -deploy $buildDir/gwt/deploy -extra $buildDir/gwt/extra -workDir $buildDir/gwt/ -war $buildDir/gwt/war"
+	onOutput { 
+		descriptor, event ->
+		logger.lifecycle("Test: " + descriptor + " produced standard out/err: " + event.message )
+	}
+	
+}
+
+configurations {
+//	sources
+/*	shadowJars {
+		canBeConsumed = true
+		canBeResolved = false
+	} */
+}
+
+/* artifacts {
+	shadowJars(shadowJar)
+} */
+
+repositories {
+	mavenLocal()
+    mavenCentral()
+    jcenter()
+}
+
+publishing {
+	publications {
+		maven(MavenPublication) {
+			from components.java
+		}
+	}
+}
+
+dependencies {
+	testRuntime 'org.slf4j:slf4j-simple:1.7.30'
+	implementation 'org.slf4j:slf4j-api:1.7.30'
+	compileOnly 'org.projectlombok:lombok:1.18.20'
+	annotationProcessor 'org.projectlombok:lombok:1.18.20'
+	testCompile 'org.projectlombok:lombok:1.18.20'
+	testRuntime 'org.projectlombok:lombok:1.18.20'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
+	testImplementation 'junit:junit:4.12'
+    implementation project(':core')
+}
+
+task buildDocs(type: Exec) {
+	dependsOn 'build'
+	commandLine 'src/main/documentation/buildhtmldocs.sh'
+}
+
+task buildReadMe_MD(type: Exec) {
+	dependsOn 'build'
+	commandLine 'src/main/documentation/buildreadme.sh'
+}
+

@@ -1,0 +1,26 @@
+/*
+* Hairball vocabulary which generates tables of contents from standard Hairball markup.
+* The result of running your markup with this vocabulary on top of the search order
+* will be to create an output which can then be sourced into in a second pass.
+*/
+/VARIABLE /CURRENTID 
+#0 /CURRENTID /V!
+/' /DROP /SETEMITTER /* get rid of all literal text so we can control what we output exactly */
+/: /INCID /CURRENTID /V@ /1+ /CURRENTID /V! :/
+/: /A <a href="# /INCID /CURRENTID /V@ /. "> :/
+/: A/ </a> :/
+/: /DOCUMENT" /" /TOC /SPACE /TABLE=" toctable " // / /SPACE :/
+/: /CHAPTER" /" /SPACE /TR=" chapter " // / /SPACE /TD /SPACE /A /. A/ /SPACE TD/ /SPACE TR/ /SPACE :/
+/: /SECTION" /" /SPACE /TR=" section " // / /SPACE /TD /SPACE /A /. A/ /SPACE TD/ /SPACE TR/ /SPACE :/
+/: /SUBSECTION" /" /SPACE /TR=" subsection " // / /SPACE /TD /SPACE /A /. A/ /SPACE TD/ /SPACE TR/ /SPACE :/
+/: /TOPIC" /" /SPACE /TR=" topic " // / /SPACE /TD /SPACE /A /. A/ /SPACE TD/ /SPACE TR/ /SPACE :/
+/: DOCUMENT/ TABLE/ /SPACE TOC/ :/
+/: /TABLE /INCID :/
+/: /TABLE=" /INCID :/
+/: /.NOW // :/
+
+/: /GETMATCHING /DOER /DROP /W /W2L /MAKELITERAL /HERE! :/
+/: /EXAMPLE /GETMATCHING EXAMPLE/ /DELIMITED /DROP :/
+/: /EXAMPLE" /" /DROP :/
+/: /LITERAL /W /DROP :/
+/: "/ // :/

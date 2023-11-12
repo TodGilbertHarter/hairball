@@ -1,0 +1,130 @@
+toc {
+    display: block;
+    margin-bottom: 1em;
+}
+
+toc title {
+    display: block;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-bottom: .5em;
+}
+
+table.toctable {
+    width: 100%;
+}
+
+table.toctable caption {
+    font-weight: bold;
+    border-bottom: 1px solid grey;
+}
+
+table tr.section > td {
+    padding-left: 1em;
+}
+
+table tr.subsection > td {
+    padding-left: 2em;
+}
+
+table tr.topic > td {
+    padding-left: 3em;
+}
+
+h1 {
+    font-size: 1em;
+}
+
+header title {
+    display: block;
+    font-weight: bold;
+    font-size: 2em;
+    text-align: center;
+    width: 100%;
+    padding: 20px;
+}
+
+subtitle {
+    display: block;
+    font-weight: normal;
+    font-style: italic;
+    font-size: 1em;
+    text-align: center;
+    padding: 10px;
+}
+
+author {
+    display: block;
+    font-weight: bold;
+    font-style: italic;
+    font-size: .8em;
+    text-align: center;
+    padding: 10px;
+}
+
+copyright {
+    display: block;
+    font-weight: normal;
+    font-style: normal;
+    font-size: .6em;
+    text-align: center;
+}
+
+section.chapter > details > summary {
+    display: inline-block;
+    font-size: 1.6em;
+    font-weight: bold;
+    background-color: DodgerBlue;
+    color: DarkBlue;
+    width: 100%;
+    margin-bottom: .5em;
+    cursor: pointer;
+}
+
+section.section > title {
+    width: 100%;
+    display: block;
+    font-weight: bold;
+    font-size: 1.4em;
+    text-decoration: underline;
+    font-style: italic;
+    color: DarkBlue;
+#    text-shadow: 1px 1px;
+    margin-bottom: .5em;
+}
+
+section.subsection > title {
+    width: 100%;
+    display: block;
+    font-weight: bold;
+    font-size: 1.2em;
+    text-decoration: underline;
+    color: DarkBlue;
+    margin-bottom: .5em;
+}
+
+section.topic > title {
+    width: 100%;
+    display: block;
+    font-weight: bold;
+    font-size: 1.1em;
+    text-decoration: none;
+    color: DarkBlue;
+    margin-bottom: .5em;
+}
+
+section.topic {
+    margin-bottom: .25em;
+}
+
+section.subsection {
+    margin-bottom: .25em;
+}
+
+section.section {
+    margin-bottom: .25em;
+}
+
+section.chapter {
+    margin-bottom: .25em;
+}

@@ -1,0 +1,62 @@
+/CHAPTER" Hairball Syntax"/
+Hairball has very simple syntax rules. There are also some ways to extend the
+syntax which support some common idioms.
+
+/SECTION" Characters"/
+Hairball processes text represented primarily by the UTF-8 encoding of UCS code
+points. This means that US-ASCII text is also legal Hairball, and that codings like
+IS0-8859-* are at least partially supported. Text intended to be processed by
+Hairball should be transcoded to UTF-8 if it is not already in that coding.
+
+There are no 'illegal' characters in Hairball, anything that UTF-8 can encode as
+as character can legally be used in Hairball code, although characters which are
+impossible to display are not normally found in most text data.
+
+/SECTION" Basic Syntax"/
+The basic unit of Hairball syntax is the token, or word. A token is any string
+of non-whitespace characters delimited by whitespace. Whitespace consists of spaces,
+tabs, newlines, and a few other less commonly encountered text entities. Technically
+the definition of whitespace is literally 'any character which returns true from
+the Java Character.isWhiteSpace() method.'
+
+There is also a special token, which consists of 2 newlines (line feed or sequences
+of carriage return + line feed). The Hairball parser will generate a token literally
+consisting of two line feeds when it encounters this construct, thus it is possible to
+define a Hairball word who's name is two line feeds, but such a word is not part of
+the Hairball built in word set.
+
+The Hairball parser simply grabs the next token off the input stream, looks it up in
+a dictionary of defined words, and executes it if it is found there, otherwise it 
+outputs a space character and the input word. Words can also access the parser as
+part of their behavior, skipping or consuming some input, etc. 
+SECTION/
+
+/SECTION" Hairball Syntax Conventions"/
+Since the basic purpose of Hairball is to act as a syntax for markup, it is important
+that Hairball words should be distinct from text. For this reason the convention is
+adopted that defined words start with a '/' character and are in ALL CAPS. For example
+/LITERAL /ALLCAPS would make a sensible word, it is unlikely anyone will want to
+put that text into their output, but if you did, you could precede it with the word
+/LITERAL /LITERAL , which will simply compile the next token to the output, effectively
+'escaping' any special significance it has to Hairball.
+
+Words which expect additional output /EM after EM/ the word follow the convention of
+ending in a double quote '"' character. All such words scan ahead for the character
+sequence /LITERAL "/ and use the text up to that marker for something. For instance the HTML
+vocabulary contains a word /LITERAL /SECTION" which marks the start of a section of
+text in a document. It formats the following text, up to the /LITERAL "/ marker, as a section
+heading.
+
+In cases where a 'close' is required, such as many HTML constructs, the convention is to
+put the slash at the end of the word, such as /LITERAL SECTION/ . Thus a section in
+Hairball HTML syntax markup looks like:
+/EXAMPLE
+/SECTION" this is a title"/ <br/>
+This is section text. <br/>
+SECTION/
+EXAMPLE/
+
+As a rule vocabularies other than the HTML vocabulary follow this same rule, but if
+a specific use case for Hairball required, some other convention could be used instead
+SECTION/
+CHAPTER/

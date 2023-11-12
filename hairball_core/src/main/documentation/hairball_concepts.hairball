@@ -1,0 +1,57 @@
+/CHAPTER" Hairball Concepts"/
+There are several basic concepts which are needed in order to fully master the
+use of Hairball. However, it isn't necessary to have a complete understanding of
+these to build simple Hairball words. All that is really needed is to know how to
+use the word pair /LITERAL /: and /LITERAL :/ . These two words are what are called
+defining words. If you want to define a new Hairball word, do it like this:
+
+/EXAMPLE" /: MYNEWWORD this is what it does :/ "/
+
+the /LITERAL /: introduces a new definition, using the next token in the input as
+its name, hence the term 'defining word'. All the Hairball source up to the trailing
+/LITERAL :/ is the behavior of this new word. In the case of this example it will
+simply print out 'this is what it does'. If other Hairball words are included in this
+definition, instead of executing, they will be /EM compiled EM/ into the new
+definition, just like the literal text 'this is what it does' was compiled in the
+example. You can emit that text 100 times simply by putting MYNEWWORD in your
+Hairball file.
+
+The rest of this chapter will go deeper into these concepts.
+
+/SECTION" Parsers, Interpreters, and Compilers "/
+If you were to simply run Hairball from the command line, with no arguments, it will
+print a prompt and wait for input. You are now interacting with the Hairball parser.
+Its job is to acquire input, parse it into tokens, and pass that input to the 
+Hairball interpreter. The interpreter tries to translate the token into a definition
+by looking it up in the Hairball dictionary.
+
+If the interpreter is successful at looking up a word, then it runs the words runtime
+behavior. If it cannot find the word in the dictionary, then it is treated as a
+literal, which is placed on the stack, and the runtime behavior of the word 'emit'
+is called.
+
+The previous paragraph is accurate when Hairball is in interpreting state, but how
+do new definitions get created? This happens by placing Hairball in compiling state.
+When Hairball is in compiling state it executes the compile time behavior of words
+and when it finds a literal in the input, it executes the compile time behavior of
+the word /LITERAL /LITERAL . 
+
+/SUBSECTION" Compile vs Runtime Behavior"/
+Every word has both a compile time behavior /EM and EM/ a runtime behavior. For most
+words the compile time behavior is /LITERAL /COMPILE, which means they compile a reference to
+their own runtime behaviors. This makes sense, normally you just want a new definition
+to be a sort of 'macro', a list of existing behaviors to execute.
+
+Now and then it may be desirable to extend Hairball itself. In that case it is necessary
+to have some other compile time behavior. One way to accomplish this is with the /LITERAL /DOER and
+/LITERAL /DOES words. These words change the compile time behavior of /LITERAL /COMPILE, so that it extends
+a diferent behavior. Normally /LITERAL /COMPILE extends the runtime behavior of the definition being
+defined (current definition, the one who's name came after the /LITERAL /: . 
+
+Executing the word /LITERAL /DOES sets this default for /LITERAL /COMPILE, and /LITERAL /DOES itself will do this at
+compile time. Executing the word /LITERAL /DOER causes /LITERAL /COMPILE to target the compile time behavior
+of the new definition. This lets you add functionality to the Hairball compiler itself.
+SUBSECTION/
+SECTION/
+
+CHAPTER/

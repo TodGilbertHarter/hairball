@@ -1,0 +1,18 @@
+/*
+* Master documentation file for hairball. 
+*/
+/DOCUMENT" Hairball Documentation "/
+/STYLES" hairball.css "/
+/BODY
+/HEADER 
+/TITLE Hairball TITLE/
+/SUBTITLE A meta-markup language SUBTITLE/
+/AUTHOR by<br/> Tod Harter /SPACE /.NOW AUTHOR/
+/COPYRIGHT Copyright &copy; 2021 Tod Harter All Rights reserved COPYRIGHT/
+HEADER/
+/SOURCE" introduction.hairball "/
+/SOURCE" hairball_syntax.hairball "/
+/SOURCE" hairball_concepts.hairball "/
+/SOURCE" hairball_builtins.hairball "/
+DOCUMENT/
+/QUIT
