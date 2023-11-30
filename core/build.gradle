@@ -1,0 +1,87 @@
+/**
+ * This software is Copyright (C) 2017 Tod G. Harter. All rights reserved.
+ * 
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
+/**
+ * CatFood server project build script: This builds all of CatFood, the
+ * CatFood Vert.x server process, and provides tasks which will allow us to
+ * fire up an instance in content development mode so we can perform short
+ * cycle interactive development in the client project.
+ */
+buildscript {
+	repositories {
+	    maven {
+	      url "https://plugins.gradle.org/m2/"
+	    }
+    	jcenter()
+        mavenCentral()
+	}
+	dependencies {
+		classpath "gradle.plugin.io.vertx:vertx-gradle-plugin:1.1.1"
+		classpath 'org.projectlombok:lombok:1.18.20'
+	}
+}
+
+plugins {
+  id "fr.brouillard.oss.gradle.jgitver" //version "0.10.0-rc03"
+}
+
+apply plugin: 'io.vertx.vertx-plugin'
+apply plugin: 'java-library'
+apply plugin: 'eclipse'
+
+group = 'com.giantelectronicbrain'
+//version = '0.0.1-SNAPSHOT'
+sourceCompatibility = JavaVersion.VERSION_11
+targetCompatibility = JavaVersion.VERSION_11
+
+repositories {
+	jcenter()
+    mavenCentral()
+	mavenLocal()
+}
+
+configurations.all {
+    // Check for updates every build
+    resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+}
+
+task copyDependencies(type: Copy) {
+	from configurations.compileOnly
+	into "$buildDir/dependencies"
+}
+
+build.dependsOn(copyDependencies)
+
+dependencies {
+	implementation platform('com.amazonaws:aws-java-sdk-bom:1.11.775')
+	implementation group: 'commons-io', name: 'commons-io', version: '2.4'
+	compileOnly 'org.projectlombok:lombok:1.18.20'
+	annotationProcessor 'org.projectlombok:lombok:1.18.20'
+	testCompileOnly 'org.projectlombok:lombok:1.18.20'
+	testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
+	implementation 'org.apache.logging.log4j:log4j-api:2.+'
+	implementation 'org.apache.logging.log4j:log4j-core:2.+'
+	implementation 'org.slf4j:slf4j-api:1.7.30'
+	implementation 'org.apache.logging.log4j:log4j-slf4j-impl:2.+'
+    testImplementation 'junit:junit:4.12'
+    implementation 'com.amazonaws:aws-java-sdk-s3'
+}
+
+vertx {
+	vertxVersion = '4.1.1'
+	launcher = 'com.giantelectronicbrain.catfood.CatFood'
+}

@@ -82,7 +82,7 @@ public class BucketWordStream extends WordStream {
 			} else {
 				CatfoodApplicationException t = makeException(result.cause());
 				result.cause().printStackTrace();
-				log.severe("failed to create reader "+t.getLocalizedMessage()+" details -> "+t.getDetails());
+//				log.severe("failed to create reader "+t.getLocalizedMessage()+" details -> "+t.getDetails());
 			}
 		});
 	}
